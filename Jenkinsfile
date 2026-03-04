@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'devops-demo'
         CONTAINER_NAME = 'devops-demo'
-        HOST_PORT = '8080'
+        HOST_PORT = '9090'
         CONTAINER_PORT = '80'
     }
     
@@ -54,7 +54,7 @@ pipeline {
     
     post {
         success {
-            echo 'Pipeline executed successfully! Application is running on port 8080.'
+            echo 'Pipeline executed successfully! Application is running on port 9090.'
         }
         failure {
             echo 'Pipeline failed. Please check the logs.'
