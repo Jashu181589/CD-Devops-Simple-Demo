@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 script {
-                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    bat "docker build -t ${DOCKER_IMAGE} ."
                 }
             }
         }
@@ -29,9 +29,9 @@ pipeline {
             steps {
                 echo 'Stopping and removing existing container...'
                 script {
-                    sh """
-                        docker stop ${CONTAINER_NAME} || true
-                        docker rm ${CONTAINER_NAME} || true
+                    bat """
+                        docker stop ${CONTAINER_NAME} || exit 0
+                        docker rm ${CONTAINER_NAME} || exit 0
                     """
                 }
             }
@@ -41,12 +41,7 @@ pipeline {
             steps {
                 echo 'Running new Docker container...'
                 script {
-                    sh """
-                        docker run -d \
-                        --name ${CONTAINER_NAME} \
-                        -p ${HOST_PORT}:${CONTAINER_PORT} \
-                        ${DOCKER_IMAGE}
-                    """
+                    bat "docker run -d --name ${CONTAINER_NAME} -p ${HOST_PORT}:${CONTAINER_PORT} ${DOCKER_IMAGE}"
                 }
             }
         }
